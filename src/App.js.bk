@@ -1,0 +1,94 @@
+import React, { useState, useEffect } from 'react'
+import { Container, Row, Col } from 'reactstrap'
+import ModalForm from './Components/Modals/Modal'
+import DataTable from './Components/Tables/DataTable'
+//import { CSVLink } from "react-csv"
+//import Login from './Components/Forms/Login';
+//import useToken from './Components/useToken';
+
+/*function setToken(userToken) {
+  sessionStorage.setItem('token', JSON.stringify(userToken));
+}
+
+function getToken() {
+  const tokenString = sessionStorage.getItem('token');
+  const userToken = JSON.parse(tokenString);
+  if (userToken != null) {
+    return userToken.token
+  }
+  return null;
+}*/
+
+function App() {
+
+  const [isLoading, setLoading] = useState(false);
+  const [items, setItems] = useState([]);
+  //const [token, setToken] = useToken();
+
+  const getItems = async () => {
+   /* try {
+      const response = await fetch('http://localhost:3000/crud');
+      const json = await response.json();
+      console.log("json: " + json)
+      setItems(json);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }*/
+    fetch('http://localhost:3000/crud')
+        .then(response => response.json())
+        .then(items => setItems(items))
+        .catch(err => console.log(err))
+  }
+
+  useEffect( () => {
+    getItems()
+    console.log("isLoading:" + isLoading)
+  }, []);
+
+  const deleteItemFromState = (id) => {
+    const updatedItems = items.filter(item => item.id !== id)
+    setItems(updatedItems)
+  }
+
+  const updateState = (item) => {
+    const itemIndex = items.findIndex(data => data.id === item.id)
+    /*const newArray = [
+      // destructure all items from beginning to the indexed item
+      ...state.slice(0, itemIndex),
+      // add the updated item to the array
+      item,
+      // add the rest of the items to the array from the index after the replaced item
+      ...state.slice(itemIndex + 1)
+    ]*/
+    items.push([])
+  }
+
+  const addItemToState = (item) => {
+    items.push(prevState => ({
+      items: [...prevState.items, item]
+    }))
+  }
+
+  return (
+      <Container className="App">
+        <Row>
+          <Col>
+            <h1 style={{margin: "20px 0"}}>Inventory Management System</h1>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <DataTable items={items} updateState={updateState} deleteItemFromState={deleteItemFromState} />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <ModalForm buttonLabel="Add Item" addItemToState={addItemToState}/>
+          </Col>
+        </Row>
+      </Container>)
+}
+
+export default App
