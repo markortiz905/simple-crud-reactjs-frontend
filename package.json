@@ -2,6 +2,7 @@
   "name": "cp1-frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "body-parser": "^1.19.0",
     "bootstrap": "^4.6.0",
@@ -32,21 +33,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "description": "![image](https://github.com/olinations/crud-starter-frontend/blob/master/template.png)",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/olinations/crud-starter-frontend.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/olinations/crud-starter-frontend/issues"
-  },
-  "homepage": "https://github.com/olinations/crud-starter-frontend#readme",
-  "devDependencies": {
-    "nodemon": "^2.0.7"
-  }
+  ]
 }
