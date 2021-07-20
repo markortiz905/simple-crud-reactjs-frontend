@@ -4,6 +4,15 @@ import ModalForm from '../Modals/Modal'
 
 class DataTable extends Component {
 
+  state = {
+    items: []
+  }
+
+  constructor(props) {
+    super(props);
+    this.setState({ items: props.items })
+  }
+
   deleteItem = id => {
     let confirmDelete = window.confirm('Delete item forever?')
     if(confirmDelete){
@@ -22,18 +31,43 @@ class DataTable extends Component {
       })
       .catch(err => console.log(err))
     }
+  }
 
+  componentDidUpdate(prevProps) {
+    console.log("componentDidUpdate")
+    const expiredCount = this.props.items.filter(value => Date.parse(value.expirationDate) < Date.now()).length;
+    const servicingCount = this.props.items.filter(value => Date.parse(value.nextServiceDate) < Date.now()).length;
+
+    if (expiredCount > 0 || servicingCount > 0) {
+      alert(expiredCount + " Expired Items and " + servicingCount + " for Servicing Items.")
+    }
+  }
+
+  componentDidMount() {
+    console.log("componentDidMount")
+    const expiredCount = this.props.items.filter(value => Date.parse(value.item.expirationDate) < Date.now()).length;
+    const servicingCount = this.props.items.filter(value => Date.parse(value.item.nextServiceDate) < Date.now()).length;
+    console.log(this.props.items.length + ", " + expiredCount);
+    if (expiredCount > 0 || servicingCount > 0) {
+      alert(expiredCount + " Expired Items and " + servicingCount + " for Servicing Items.")
+    }
   }
 
   render() {
 
-    const items = this.props.items.map(item => {
-      return (
-        <tr key={item.id}>
+    const now = Date.now();
+    const items = this.props.items.sort((a,b) =>
+          (Date.parse(a.item.nextServiceDate) > Date.parse(b.item.nextServiceDate)) ? -1 : 1 ).map(item => {
+        const expired = Date.parse(item.expirationDate) < now;
+        const nextServiceDateExpired = Date.parse(item.nextServiceDate) < now;
+        return (
+        <tr style={{color: expired || nextServiceDateExpired ? "red" : "black"}} key={item.id}>
           <th scope="row">{item.id}</th>
           <td>{item.item}</td>
           <td>{item.section}</td>
           <td>{item.datePurchased}</td>
+            <td>{expired ? "expired!, " : ""} {item.expirationDate}</td>
+          <td>{nextServiceDateExpired ? "for servicing!, " : ""} {item.nextServiceDate}</td>
           <td>{item.propertyNumber}</td>
           <td>{item.description}</td>
           <td>{item.serialNumber}</td>
@@ -59,6 +93,8 @@ class DataTable extends Component {
             <th>ITEM</th>
             <th>DEPT/SECTION</th>
             <th>DATE PURCHASED</th>
+              <th>EXPIRATION DATE</th>
+            <th>NEXT SERVICE DATE</th>
             <th>PROPERTY NUMBER</th>
             <th>DESCRIPTION</th>
             <th>SERIAL NUMBER</th>

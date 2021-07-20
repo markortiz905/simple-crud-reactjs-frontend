@@ -15,7 +15,9 @@
     "pg": "^8.6.0",
     "react": "^16.14.0",
     "react-csv": "^1.1.2",
+    "react-date-picker": "^8.2.0",
     "react-dom": "^16.14.0",
+    "react-notification-badge": "^1.5.1",
     "react-scripts": "2.1.8",
     "reactstrap": "^7.1.0"
   },

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import DatePicker from 'react-date-picker';
 
 class AddEditForm extends React.Component {
   state = {
@@ -7,6 +8,8 @@ class AddEditForm extends React.Component {
     item: '',
     section: '',
     datePurchased: '',
+    expirationDate: '',
+  nextServiceDate: '',
     propertyNumber: '',
     description: '',
     serialNumber: '',
@@ -18,6 +21,18 @@ class AddEditForm extends React.Component {
   onChange = e => {
     this.setState({[e.target.name]: e.target.value})
   }
+
+    onChangeDateExpiration = e => {
+        this.setState({expirationDate: e})
+    }
+
+    onChangeNextServiceDate = e => {
+        this.setState({nextServiceDate: e})
+    }
+
+    onChangeDatePurchased = e => {
+        this.setState({datePurchased: e})
+    }
 
   submitFormAdd = e => {
     e.preventDefault()
@@ -31,6 +46,8 @@ class AddEditForm extends React.Component {
         item: this.state.item,
         section: this.state.section,
         datePurchased: this.state.datePurchased,
+          expirationDate: this.state.expirationDate,
+          nextServiceDate: this.state.nextServiceDate,
         propertyNumber: this.state.propertyNumber,
         description: this.state.description,
         serialNumber: this.state.serialNumber,
@@ -63,6 +80,8 @@ class AddEditForm extends React.Component {
         item: this.state.item,
         section: this.state.section,
         datePurchased: this.state.datePurchased,
+          expirationDate: this.state.expirationDate,
+          nextServiceDate: this.state.nextServiceDate,
         propertyNumber: this.state.propertyNumber,
         description: this.state.description,
         serialNumber: this.state.serialNumber,
@@ -104,9 +123,29 @@ class AddEditForm extends React.Component {
           <Input type="text" name="section" id="section" onChange={this.onChange} value={this.state.section === null ? '' : this.state.section}  />
         </FormGroup>
         <FormGroup>
-          <Label for="email">Date Purchased</Label>
-          <Input type="text" name="datePurchased" id="datePurchased" onChange={this.onChange} value={this.state.datePurchased === null ? '' : this.state.datePurchased}  />
+          <Label for="datePurchased">Date Purchased</Label>
+            <br/>
+            <DatePicker
+                name="datePurchased" id="datePurchased"
+                onChange={this.onChangeDatePurchased}
+                value={this.state.datePurchased === null ? '' : this.state.datePurchased} />
         </FormGroup>
+          <FormGroup>
+              <Label for="expirationDate">Expiration Date</Label>
+              <br/>
+              <DatePicker
+                  name="expirationDate" id="expirationDate"
+                  onChange={this.onChangeDateExpiration}
+                  value={this.state.expirationDate === null ? '' : this.state.expirationDate} />
+          </FormGroup>
+          <FormGroup>
+              <Label for="nextServiceDate">Next Service Date</Label>
+              <br/>
+              <DatePicker
+                  name="nextServiceDate" id="nextServiceDate"
+                  onChange={this.onChangeNextServiceDate}
+                  value={this.state.nextServiceDate === null ? '' : this.state.nextServiceDate} />
+          </FormGroup>
         <FormGroup>
           <Label for="phone">Property Number</Label>
           <Input type="text" name="propertyNumber" id="propertyNumber" onChange={this.onChange} value={this.state.propertyNumber === null ? '' : this.state.propertyNumber}  placeholder="ex. 555-555-5555" />

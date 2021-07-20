@@ -42,7 +42,19 @@ class App extends Component {
   }
 
   componentDidMount(){
-    this.getItems()
+    this.getItems();
+
+    const now = Date.now();
+    const count = this.state.items.filter(value => {
+      const expired = Date.parse(value.expirationDate) < now;
+      if (expired) {
+        return true;
+      }
+      return false;
+    });
+
+    console.log("count: " + this.state.items.length)
+    this.setState({expiredItemsCount: count.length})
   }
 
   saveToken(jsonToken) {
@@ -65,9 +77,9 @@ class App extends Component {
         <Container className="App">
           <Row>
             <Col>
-              <h3 style={{margin: "20px 0"}}>City Disaster Risk Reduction and Management Office | Inventory</h3>
+              <h3 style={{margin: "20px 0"}}>DORSU DISASTER INVENTORY M.S.</h3>
             </Col>
-            <Col>
+            <Col col={{"width":"100px"}}>
               <h3 style={{"text-align": "right", margin: "20px 0"}}>
                 <button onClick={this.handleClick}>
                   log out
