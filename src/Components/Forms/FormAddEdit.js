@@ -36,7 +36,7 @@ class AddEditForm extends React.Component {
 
   submitFormAdd = e => {
     e.preventDefault()
-    fetch('http://ec2-35-183-28-154.ca-central-1.compute.amazonaws.com:3000/crud', {
+    fetch('http://ec2-34-222-149-71.us-west-2.compute.amazonaws.com:3000/crud', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
@@ -70,7 +70,7 @@ class AddEditForm extends React.Component {
 
   submitFormEdit = e => {
     e.preventDefault()
-    fetch('http://ec2-35-183-28-154.ca-central-1.compute.amazonaws.com:3000/crud', {
+    fetch('http://ec2-34-222-149-71.us-west-2.compute.amazonaws.com:3000/crud', {
       method: 'put',
       headers: {
         'Content-Type': 'application/json'

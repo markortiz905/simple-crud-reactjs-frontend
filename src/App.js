@@ -11,7 +11,7 @@ class App extends Component {
   }
 
   getItems(){
-    fetch('http://ec2-35-183-28-154.ca-central-1.compute.amazonaws.com:3000/crud')
+    fetch('http://ec2-34-222-149-71.us-west-2.compute.amazonaws.com:3000/crud')
         .then(response => response.json())
         .then(items => this.setState({items}))
         .catch(err => console.log(err))
