@@ -94,14 +94,6 @@ class App extends Component {
           </Row>
           <Row>
             <Col>
-              <CSVLink
-                  filename={"db.csv"}
-                  color="primary"
-                  style={{float: "left", marginRight: "10px"}}
-                  className="btn btn-primary"
-                  data={this.state.items}>
-                Download CSV
-              </CSVLink>
               <ModalForm buttonLabel="Add Item" addItemToState={this.addItemToState}/>
             </Col>
           </Row>

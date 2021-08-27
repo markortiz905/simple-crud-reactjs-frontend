@@ -35,8 +35,8 @@ class DataTable extends Component {
 
   componentDidUpdate(prevProps) {
     console.log("componentDidUpdate")
-    const expiredCount = this.props.items.filter(value => Date.parse(value.expirationDate) < Date.now()).length;
-    const servicingCount = this.props.items.filter(value => Date.parse(value.nextServiceDate) < Date.now()).length;
+    const expiredCount = !Array.isArray(this.props.items) ? 0 : this.props.items.filter(value => Date.parse(value.expirationDate) < Date.now()).length;
+    const servicingCount = !Array.isArray(this.props.items) ? 0 : this.props.items.filter(value => Date.parse(value.nextServiceDate) < Date.now()).length;
 
     if (expiredCount > 0 || servicingCount > 0) {
       alert(expiredCount + " Expired Items and " + servicingCount + " for Servicing Items.")
@@ -45,8 +45,8 @@ class DataTable extends Component {
 
   componentDidMount() {
     console.log("componentDidMount")
-    const expiredCount = this.props.items.filter(value => Date.parse(value.item.expirationDate) < Date.now()).length;
-    const servicingCount = this.props.items.filter(value => Date.parse(value.item.nextServiceDate) < Date.now()).length;
+    const expiredCount = !Array.isArray(this.props.items) ? 0 : this.props.items.filter(value => Date.parse(value.item.expirationDate) < Date.now()).length;
+    const servicingCount = !Array.isArray(this.props.items) ? 0 : this.props.items.filter(value => Date.parse(value.item.nextServiceDate) < Date.now()).length;
     console.log(this.props.items.length + ", " + expiredCount);
     if (expiredCount > 0 || servicingCount > 0) {
       alert(expiredCount + " Expired Items and " + servicingCount + " for Servicing Items.")
@@ -56,7 +56,7 @@ class DataTable extends Component {
   render() {
 
     const now = Date.now();
-    const items = this.props.items.sort((a,b) =>
+    const items = !Array.isArray(this.props.items) ? [] : this.props.items.sort((a,b) =>
           (Date.parse(a.item.nextServiceDate) > Date.parse(b.item.nextServiceDate)) ? -1 : 1 ).map(item => {
         const expired = Date.parse(item.expirationDate) < now;
         const nextServiceDateExpired = Date.parse(item.nextServiceDate) < now;
