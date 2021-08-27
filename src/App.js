@@ -4,7 +4,8 @@ import ModalForm from './Components/Modals/Modal'
 import DataTable from './Components/Tables/DataTable'
 import { CSVLink } from "react-csv"
 import Login from './Components/Forms/Login';
-
+import Printer, { print } from 'react-pdf-print'
+const ids = ['1']
 class App extends Component {
   state = {
     items: []
@@ -89,11 +90,18 @@ class App extends Component {
           </Row>
           <Row>
             <Col>
-              <DataTable items={this.state.items} updateState={this.updateState} deleteItemFromState={this.deleteItemFromState} />
+              <Printer>
+                <div id={ids[0]}>
+                <DataTable items={this.state.items} updateState={this.updateState} deleteItemFromState={this.deleteItemFromState} />
+                </div>
+              </Printer>
             </Col>
           </Row>
           <Row>
             <Col>
+              <input type='button' style={{ position: 'relative', float: 'right' }}
+                     onClick={() => window.print()} value='Print!' />
+
               <ModalForm buttonLabel="Add Item" addItemToState={this.addItemToState}/>
             </Col>
           </Row>
